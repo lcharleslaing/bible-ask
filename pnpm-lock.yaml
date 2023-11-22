@@ -6,6 +6,7 @@ specifiers:
   '@sveltejs/kit': ^1.27.4
   autoprefixer: ^10.4.14
   daisyui: ^4.4.2
+  lodash: ^4.17.21
   lodash-es: ^4.17.21
   postcss: ^8.4.24
   postcss-load-config: ^4.0.1
@@ -15,6 +16,7 @@ specifiers:
 
 dependencies:
   '@supabase/supabase-js': 2.38.5
+  lodash: 4.17.21
   lodash-es: 4.17.21
 
 devDependencies:
@@ -936,6 +938,10 @@ packages:
 
   /lodash-es/4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
+  /lodash/4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
 
   /magic-string/0.30.5:

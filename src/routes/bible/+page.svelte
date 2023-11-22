@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
+  import { debounce } from "lodash";
 
   let bibleVerses = [];
   let groupedVerses = {};
@@ -8,18 +9,40 @@
   let error = "";
   let searchQuery = "";
 
-  async function fetchBibleVerses() {
-    const { data, error: fetchError } = await supabase
-      .from("kjvbible")
-      .select("*");
+  let matchCount = {
+    total: 0,
+    books: {},
+    chapters: {},
+  };
 
-    if (fetchError) {
-      console.error("Error fetching Bible verses:", fetchError);
-      error = fetchError.message;
-    } else {
-      bibleVerses = data;
-      processVerses(); // Process verses immediately after fetching
+  async function fetchBibleVerses() {
+    let index = 0;
+    const limit = 1000;
+    let hasMore = true;
+
+    bibleVerses = [];
+
+    while (hasMore) {
+      const { data, error: fetchError } = await supabase
+        .from("kjvbible")
+        .select("*")
+        .range(index, index + limit - 1);
+
+      if (fetchError) {
+        console.error("Error fetching Bible verses:", fetchError);
+        error = fetchError.message;
+        break;
+      }
+
+      if (data.length < limit) {
+        hasMore = false;
+      }
+
+      bibleVerses = [...bibleVerses, ...data];
+      index += limit;
     }
+
+    processVerses(); // Call this function once all data is loaded
     loading = false;
   }
 
@@ -36,7 +59,8 @@
 
   function processVerses() {
     groupedVerses = {};
-    // No need to convert to lowercase here
+    matchCount = { total: 0, books: {}, chapters: {} };
+
     for (const verse of bibleVerses) {
       const { book, chapter, verse: verseNumber, text } = verse;
       const verseContent = `${book} ${chapter}:${verseNumber} ${text}`;
@@ -47,23 +71,34 @@
       ) {
         const displayText = highlightText(text, searchQuery);
 
-        if (!groupedVerses[book]) groupedVerses[book] = {};
-        if (!groupedVerses[book][chapter]) groupedVerses[book][chapter] = [];
-        groupedVerses[book][chapter].push({ ...verse, displayText });
+        if (!groupedVerses[book]) {
+          groupedVerses[book] = {};
+          matchCount.books[book] = 0;
+        }
+        if (!groupedVerses[book][chapter]) {
+          groupedVerses[book][chapter] = [];
+          matchCount.chapters[`${book}-${chapter}`] = 0;
+        }
 
-        // Debugging
-        console.log(
-          `Processed verse: ${verseContent}, Display: ${displayText}`,
-        );
+        groupedVerses[book][chapter].push({ ...verse, displayText });
+        matchCount.total++;
+        matchCount.books[book]++;
+        matchCount.chapters[`${book}-${chapter}`]++;
       }
     }
   }
 
   onMount(fetchBibleVerses);
 
-  // Reactive statement to process verses whenever bibleVerses updates or searchQuery changes
-  // Reactive statement to reprocess verses whenever search query changes
-  $: searchQuery, processVerses();
+  // Debounced processVerses function
+  const debouncedProcessVerses = debounce(() => {
+    if (bibleVerses.length > 0) {
+      processVerses();
+    }
+  }, 200); // 300 ms delay
+
+  // Reactive statement to call debounced function on search query change
+  $: searchQuery, debouncedProcessVerses();
 </script>
 
 <div class="container mx-auto p-4">
@@ -74,14 +109,35 @@
     class="search-input"
   />
   {#if loading}
-    <p>Loading...</p>
+    <div class="flex flex-col h-full mt-52 justify-center items-center">
+      <p class="my-2 text-4xl text-center font-extrabold">Loading...</p>
+      <p class="my-2 text-2xl text-justify font-bold">
+        We've waited patiently this long for the Rapture...what's a few more
+        seconds for God's word to load :)
+      </p>
+    </div>
   {:else if error}
     <p class="error">{error}</p>
   {:else}
+    <p class="my-2">
+      Total Matches: <span class="text-lg ml-2 text-green-800 font-bold"
+        >({matchCount.total})</span
+      >
+    </p>
     {#each Object.entries(groupedVerses) as [book, chapters]}
-      <h2 class="text-2xl font-bold">{book}</h2>
+      <h2 class="flex items-center text-2xl font-bold">
+        {book}
+        <span class="text-lg ml-2 text-green-800"
+          >({matchCount.books[book]})</span
+        >
+      </h2>
       {#each Object.entries(chapters) as [chapter, verses]}
-        <h3 class="text-xl font-bold">Chapter {chapter}</h3>
+        <h3 class="flex items-center text-xl font-bold">
+          Chapter {chapter}
+          <span class="text-sm ml-2 text-green-800"
+            >({matchCount.chapters[`${book}-${chapter}`]})</span
+          >
+        </h3>
         {#each verses as verse}
           <div class="verse">
             <p>

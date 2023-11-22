@@ -21,6 +21,7 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.38.5",
+    "lodash": "^4.17.21",
     "lodash-es": "^4.17.21"
   }
 }
