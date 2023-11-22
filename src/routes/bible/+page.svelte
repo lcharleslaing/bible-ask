@@ -101,6 +101,9 @@
   $: searchQuery, debouncedProcessVerses();
 </script>
 
+<div class="">
+  <h1 class="text-4xl font-bold text-center mt-4">Bible Search</h1>
+</div>
 <div class="container mx-auto p-4">
   <input
     type="text"
@@ -114,6 +117,12 @@
       <p class="my-2 text-2xl text-justify font-bold">
         We've waited patiently this long for the Rapture...what's a few more
         seconds for God's word to load :)
+      </p>
+      <p class="my-2 text-2xl text-justify font-bold">
+        WE NEED TO BE WITH OUR LORD!!!!!
+      </p>
+      <p class="my-2 text-2xl text-justify font-bold">
+        PRAISE GOD...LET'S GOOOOOO!!!!!
       </p>
     </div>
   {:else if error}

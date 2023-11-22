@@ -27,9 +27,10 @@
     //     { title: "Categories", href: "/categories" },
     //   ],
     // },
-    { title: "Bible Ask Questions", href: "/questions" },
-    { title: "Bible Ask Answers", href: "/answers" },
+    // { title: "Bible Ask Questions", href: "/questions" },
+    // { title: "Bible Ask Answers", href: "/answers" },
     { title: "Bible KJV", href: "/bible" },
+    { title: "Non Clapper Chat", href: "/ncc" },
   ];
 </script>
 
