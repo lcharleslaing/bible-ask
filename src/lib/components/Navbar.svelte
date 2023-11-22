@@ -14,6 +14,7 @@
         { title: "Register", href: "/" }, // Link to your Register page
         { title: "Signin", href: "/" }, // Link to your Login page
         { title: "Logout", href: "/" }, // Link to your Logout page
+        { title: "Profile", href: "/profile" }, // Link to your Logout page
       ],
     },
     // {
@@ -26,7 +27,9 @@
     //     { title: "Categories", href: "/categories" },
     //   ],
     // },
-    // { title: "Bible Ask Help", href: "/help/bible-ask" },
+    { title: "Bible Ask Questions", href: "/questions" },
+    { title: "Bible Ask Answers", href: "/answers" },
+    { title: "Bible KJV", href: "/bible" },
   ];
 </script>
 

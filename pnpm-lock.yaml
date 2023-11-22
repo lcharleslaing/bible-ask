@@ -1,22 +1,21 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@prisma/client': 5.6.0
   '@supabase/supabase-js': ^2.38.5
   '@sveltejs/adapter-auto': ^2.0.0
   '@sveltejs/kit': ^1.27.4
   autoprefixer: ^10.4.14
   daisyui: ^4.4.2
+  lodash-es: ^4.17.21
   postcss: ^8.4.24
   postcss-load-config: ^4.0.1
-  prisma: ^5.6.0
   svelte: ^4.0.5
   tailwindcss: ^3.3.2
   vite: ^4.4.2
 
 dependencies:
-  '@prisma/client': 5.6.0_prisma@5.6.0
   '@supabase/supabase-js': 2.38.5
+  lodash-es: 4.17.21
 
 devDependencies:
   '@sveltejs/adapter-auto': 2.1.1_@sveltejs+kit@1.27.6
@@ -25,7 +24,6 @@ devDependencies:
   daisyui: 4.4.2_postcss@8.4.31
   postcss: 8.4.31
   postcss-load-config: 4.0.2_postcss@8.4.31
-  prisma: 5.6.0
   svelte: 4.2.7
   tailwindcss: 3.3.5
   vite: 4.5.0
@@ -302,28 +300,6 @@ packages:
   /@polka/url/1.0.0-next.23:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
     dev: true
-
-  /@prisma/client/5.6.0_prisma@5.6.0:
-    resolution: {integrity: sha512-mUDefQFa1wWqk4+JhKPYq8BdVoFk9NFMBXUI8jAkBfQTtgx8WPx02U2HB/XbAz3GSUJpeJOKJQtNvaAIDs6sug==}
-    engines: {node: '>=16.13'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-    dependencies:
-      '@prisma/engines-version': 5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee
-      prisma: 5.6.0
-    dev: false
-
-  /@prisma/engines-version/5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee:
-    resolution: {integrity: sha512-UoFgbV1awGL/3wXuUK3GDaX2SolqczeeJ5b4FVec9tzeGbSWJboPSbT0psSrmgYAKiKnkOPFSLlH6+b+IyOwAw==}
-    dev: false
-
-  /@prisma/engines/5.6.0:
-    resolution: {integrity: sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==}
-    requiresBuild: true
 
   /@supabase/functions-js/2.1.5:
     resolution: {integrity: sha512-BNzC5XhCzzCaggJ8s53DP+WeHHGT/NfTsx2wUSSGKR2/ikLFQTBCDzMvGz/PxYMqRko/LwncQtKXGOYp1PkPaw==}
@@ -958,6 +934,10 @@ packages:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
     dev: true
 
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
   /magic-string/0.30.5:
     resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
     engines: {node: '>=12'}
@@ -1164,14 +1144,6 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
-
-  /prisma/5.6.0:
-    resolution: {integrity: sha512-EEaccku4ZGshdr2cthYHhf7iyvCcXqwJDvnoQRAJg5ge2Tzpv0e2BaMCp+CbbDUwoVTzwgOap9Zp+d4jFa2O9A==}
-    engines: {node: '>=16.13'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@prisma/engines': 5.6.0
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
