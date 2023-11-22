@@ -23,23 +23,38 @@
     loading = false;
   }
 
+  function highlightText(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(query, "gi");
+    const result = text.replace(
+      regex,
+      (match) => `<span class="highlight">${match}</span>`,
+    );
+    console.log(result); // Debugging: Check the output
+    return result;
+  }
+
   function processVerses() {
     groupedVerses = {};
-    const lowerCaseQuery = searchQuery.toLowerCase();
-
+    // No need to convert to lowercase here
     for (const verse of bibleVerses) {
       const { book, chapter, verse: verseNumber, text } = verse;
-      const verseContent =
-        `${book} ${chapter}:${verseNumber} ${text}`.toLowerCase();
+      const verseContent = `${book} ${chapter}:${verseNumber} ${text}`;
 
-      if (!searchQuery || verseContent.includes(lowerCaseQuery)) {
-        if (!groupedVerses[book]) {
-          groupedVerses[book] = {};
-        }
-        if (!groupedVerses[book][chapter]) {
-          groupedVerses[book][chapter] = [];
-        }
-        groupedVerses[book][chapter].push(verse);
+      if (
+        !searchQuery ||
+        verseContent.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
+        const displayText = highlightText(text, searchQuery);
+
+        if (!groupedVerses[book]) groupedVerses[book] = {};
+        if (!groupedVerses[book][chapter]) groupedVerses[book][chapter] = [];
+        groupedVerses[book][chapter].push({ ...verse, displayText });
+
+        // Debugging
+        console.log(
+          `Processed verse: ${verseContent}, Display: ${displayText}`,
+        );
       }
     }
   }
@@ -69,7 +84,9 @@
         <h3 class="text-xl font-bold">Chapter {chapter}</h3>
         {#each verses as verse}
           <div class="verse">
-            <p><b>{verse.chapter}:{verse.verse}</b> - {verse.text}</p>
+            <p>
+              <b>{verse.chapter}:{verse.verse}</b> - {@html verse.displayText}
+            </p>
           </div>
         {/each}
       {/each}
@@ -78,6 +95,15 @@
 </div>
 
 <style>
+  :global(.highlight) {
+    background-color: green;
+    padding: 2px;
+    font-weight: bolder;
+    border: 1px solid greenyellow;
+    font-size: 1.1em;
+    color: white;
+  }
+
   .search-input {
     width: 100%;
     padding: 8px;
@@ -90,5 +116,8 @@
   }
   .error {
     color: red;
+  }
+  .highlight {
+    background-color: yellow;
   }
 </style>
